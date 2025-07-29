@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FE487B6F2E38A817002365CC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = FE487B6E2E38A817002365CC /* .gitignore */; };
+		FE4883AD2E395807002365CC /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FE4883AC2E395807002365CC /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +25,7 @@
 		FE487B562E38A77E002365CC /* EffectiveTodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectiveTodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE487B6E2E38A817002365CC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		FE4883172E395670002365CC /* EffectiveTodoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EffectiveTodoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE4883AC2E395807002365CC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -50,6 +52,11 @@
 			path = EffectiveTodoAppTests;
 			sourceTree = "<group>";
 		};
+		FE4883A92E3957D0002365CC /* Assets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Assets;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +80,8 @@
 		FE487B4D2E38A77E002365CC = {
 			isa = PBXGroup;
 			children = (
+				FE4883AC2E395807002365CC /* README.md */,
+				FE4883A92E3957D0002365CC /* Assets */,
 				FE487B6E2E38A817002365CC /* .gitignore */,
 				FE487B582E38A77E002365CC /* EffectiveTodoApp */,
 				FE4883182E395670002365CC /* EffectiveTodoAppTests */,
@@ -106,6 +115,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				FE487B582E38A77E002365CC /* EffectiveTodoApp */,
+				FE4883A92E3957D0002365CC /* Assets */,
 			);
 			name = EffectiveTodoApp;
 			packageProductDependencies = (
@@ -182,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE487B6F2E38A817002365CC /* .gitignore in Resources */,
+				FE4883AD2E395807002365CC /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

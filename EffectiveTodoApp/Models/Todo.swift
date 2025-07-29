@@ -18,3 +18,13 @@ struct Todo: Equatable {
         lhs.id == rhs.id
     }
 }
+
+extension Todo {
+    init(entity: TodoEntity) {
+        self.id = Int(entity.id)
+        self.title = entity.title ?? ""
+        self.text = entity.text ?? ""
+        self.completed = entity.completed
+        self.createdAt = entity.createdAt
+    }
+}

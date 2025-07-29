@@ -14,7 +14,7 @@ final class TodoDetailPresenter {
 
     init(todo: Todo?) {
         // TODO: replace with TodoStorageService create if todo is nil
-        self.todo = todo ?? Todo(id: 1, title: "", text: "", completed: false)
+        self.todo = todo ?? Todo()
     }
 }
 

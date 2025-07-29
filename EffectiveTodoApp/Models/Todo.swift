@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Todo: Equatable {
+struct Todo: Equatable, Decodable {
     var id: Int
     var title: String
     var text: String
@@ -16,6 +16,30 @@ struct Todo: Equatable {
     
     static func == (lhs: Todo, rhs: Todo) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    init() {
+        self.id = 0
+        self.title = ""
+        self.text = ""
+        self.completed = false
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case todo
+        case completed
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.id = try Int(container.decode(Int.self, forKey: .id))
+        self.title = try container.decode(String.self, forKey: .todo)
+        self.completed = try container.decode(Bool.self, forKey: .completed)
+        
+        self.text = ""
+        self.createdAt = Date()
     }
 }
 

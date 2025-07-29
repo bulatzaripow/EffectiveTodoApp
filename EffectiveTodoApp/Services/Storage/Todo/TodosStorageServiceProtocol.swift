@@ -12,6 +12,7 @@ protocol TodosStorageServiceProtocol: AnyObject {
     func fetchTodos(completion: @escaping ([Todo]) -> Void)
     func searchTodos(by query: String, completion: @escaping ([Todo]) -> Void)
     func create(completion: @escaping (Todo) -> Void)
+    func create(todo: Todo, completion: @escaping (Todo) -> Void)
     func save(todo: Todo, completion: (() -> Void)?)
     func update(todo: Todo, completion: (() -> Void)?)
     func delete(todo: Todo, completion: (() -> Void)?)

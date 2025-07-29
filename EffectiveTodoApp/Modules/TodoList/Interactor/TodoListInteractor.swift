@@ -46,4 +46,10 @@ extension TodoListInteractor: TodoListInteractorProtocol {
     func toggleTodoCompletion(_ todo: Todo) {
         storageService.update(todo: todo, completion: nil)
     }
+    
+    func saveTodos(_ todos: [Todo]) {
+        todos.forEach { todo in
+            storageService.create(todo: todo) { _ in }
+        }
+    }
 }

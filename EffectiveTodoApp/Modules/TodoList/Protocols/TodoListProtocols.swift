@@ -37,6 +37,7 @@ protocol TodoListInteractorProtocol: AnyObject {
     func createTodo()
     func deleteTodo(_ todo: Todo)
     func toggleTodoCompletion(_ todo: Todo)
+    func saveTodos(_ todos: [Todo])
 }
 
 protocol TodoListInteractorOutputProtocol: AnyObject {

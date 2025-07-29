@@ -15,9 +15,17 @@ final class TodoListPresenter {
     var interactor: TodoListInteractorProtocol!
     var router: TodoListRouterProtocol!
     
+    private let todoNetworkService: TodoNetworkServiceProtocol
+    
     // MARK: - State
     
     var todos: [Todo] = []
+    
+    // MARK: - Init
+    
+    init(todoNetworkService: TodoNetworkServiceProtocol = TodoNetworkService()) {
+        self.todoNetworkService = todoNetworkService
+    }
 }
 
 // MARK: - TodoListPresenterProtocol
@@ -25,6 +33,7 @@ final class TodoListPresenter {
 extension TodoListPresenter: TodoListPresenterProtocol {
     func viewDidLoad() {
         interactor.fetchTodos()
+        loadMockData()
     }
     
     func viewWillAppear() {
@@ -68,6 +77,23 @@ extension TodoListPresenter: TodoListPresenterProtocol {
             interactor.toggleTodoCompletion(updatedTodo)
             
             view?.displayTodos(todos)
+        }
+    }
+    
+    func loadMockData() {
+        if !UserDefaults.standard.bool(forKey: "isFirstLaunch") {
+            todoNetworkService.fetchTodos { [weak self] result in
+                switch result {
+                case .success(let todos):
+                    self?.todos = todos
+                    self?.interactor.saveTodos(todos)
+                    self?.view?.displayTodos(todos)
+                    self?.view?.updateTodoCount(todos.count)
+                case .failure:
+                    print("Ошибка загрузки задач")
+                }
+                UserDefaults.standard.set(true, forKey: "isFirstLaunch")
+            }
         }
     }
 }

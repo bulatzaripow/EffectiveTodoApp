@@ -103,7 +103,31 @@ final class TodosStorageService: TodosStorageServiceProtocol {
             } catch {
                 print("Error saving empty todo: \(error)")
                 DispatchQueue.main.async {
-                    completion(Todo(id: -1, title: "Ошибка", text: "", completed: false, createdAt: nil))
+                    completion(Todo())
+                }
+            }
+        }
+    }
+    
+    func create(todo: Todo, completion: @escaping (Todo) -> Void) {
+        backgroundContext.perform {
+            let entity = TodoEntity(context: self.backgroundContext)
+            entity.id = Int64(todo.id)
+            entity.title = todo.title
+            entity.text = todo.text
+            entity.completed = todo.completed
+            entity.createdAt = todo.createdAt
+            
+            do {
+                try self.backgroundContext.save()
+                let todo = Todo(entity: entity)
+                DispatchQueue.main.async {
+                    completion(todo)
+                }
+            } catch {
+                print("Error saving empty todo: \(error)")
+                DispatchQueue.main.async {
+                    completion(Todo())
                 }
             }
         }

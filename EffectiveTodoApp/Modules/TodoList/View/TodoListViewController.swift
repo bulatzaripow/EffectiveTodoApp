@@ -101,12 +101,12 @@ extension TodoListViewController: UITableViewDelegate {
 
 extension TodoListViewController: TodoListViewProtocol {
     func displayTodos(_ todos: [Todo]) {
-        baseView.taskCountLabel.text = "\(todos.count) Задач"
         baseView.tableView.reloadData()
     }
 
     func updateTodoCount(_ count: Int) {
-        baseView.taskCountLabel.text = "\(count) Задач"
+        let countString = Pluralizer.shared.pluralizeWord(count, words: ["Задача", "Задачи", "Задач"])
+        baseView.taskCountLabel.text = "\(count) \(countString)"
     }
     
     func removeTodo(with index: Int) {

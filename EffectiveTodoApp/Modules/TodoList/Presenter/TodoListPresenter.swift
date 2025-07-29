@@ -108,6 +108,7 @@ extension TodoListPresenter: TodoListInteractorOutputProtocol {
     }
     
     func didSearchTodos(_ todos: [Todo]) {
+        self.todos = todos
         view?.displayTodos(todos)
         view?.updateTodoCount(todos.count)
     }

@@ -34,7 +34,7 @@ extension TodoListInteractor: TodoListInteractorProtocol {
     func searchTodos(with query: String) {
         storageService.searchTodos(by: query) { [weak self] todos in
             DispatchQueue.main.async {
-                self?.presenter?.didFetchTodos(todos)
+                self?.presenter?.didSearchTodos(todos)
             }
         }
     }

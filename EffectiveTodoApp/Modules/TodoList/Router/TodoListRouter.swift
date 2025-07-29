@@ -11,6 +11,7 @@ final class TodoListRouter: TodoListRouterProtocol {
     weak var view: UIViewController?
 
     func openTodoDetail(from view: any TodoListViewProtocol, todo: Todo?) {
-        // TODO: open todo detail
+        let detailVC = TodoDetailBuilder.build(with: todo)
+        self.view?.navigationController?.pushViewController(detailVC, animated: true)
     }
 }

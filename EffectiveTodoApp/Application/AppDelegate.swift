@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  EffectiveTodoApp
 //
-//  Created by Bulat Zaripov on 29.07.2025.
+//  Created by Bulat Zaripov on 25.07.2025.
 //
 
 import UIKit

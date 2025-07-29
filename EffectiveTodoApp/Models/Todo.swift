@@ -18,11 +18,16 @@ struct Todo: Equatable, Decodable {
         lhs.id == rhs.id
     }
     
-    init() {
-        self.id = 0
-        self.title = ""
-        self.text = ""
-        self.completed = false
+    init(
+        id: Int = 0,
+        title: String = "",
+        text: String = "",
+        completed: Bool = false
+    ) {
+         self.id = id
+         self.title = title
+         self.text = text
+         self.completed = completed
     }
     
     enum CodingKeys: String, CodingKey {

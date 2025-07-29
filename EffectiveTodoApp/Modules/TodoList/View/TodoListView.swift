@@ -26,6 +26,12 @@ final class TodoListView: UIView {
         searchField.textColor = searchFieldColor
         searchField.placeholder = "Поиск"
         
+        let micButton = UIButton(type: .system)
+        micButton.setImage(UIImage(named: "mic"), for: .normal)
+        micButton.tintColor = searchFieldColor.withAlphaComponent(0.5)
+        micButton.frame = CGRect(x: 0, y: 0, width: 17, height: 22)
+        micButton.contentMode = .scaleAspectFit
+        
         // Placeholder
         let placeholder = searchField.value(forKey: "placeholderLabel") as? UILabel
         placeholder?.textColor = searchFieldColor.withAlphaComponent(0.5)
@@ -41,6 +47,9 @@ final class TodoListView: UIView {
             clearButton.setImage(tintedImage, for: .normal)
             clearButton.tintColor = searchFieldColor.withAlphaComponent(0.5)
         }
+        
+        searchField.rightView = micButton
+        searchField.rightViewMode = .unlessEditing
         
         return searchField
     }()

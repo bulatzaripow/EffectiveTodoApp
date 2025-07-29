@@ -34,6 +34,7 @@ extension TodoListPresenter: TodoListPresenterProtocol {
     
     func didSearchTextChange(_ text: String) {
         if text.isEmpty {
+            interactor.fetchTodos()
             view?.displayTodos(todos)
             view?.updateTodoCount(todos.count)
         } else {

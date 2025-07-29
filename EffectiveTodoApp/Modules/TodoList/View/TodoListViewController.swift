@@ -46,6 +46,7 @@ final class TodoListViewController: UIViewController {
     
     private func setupActions() {
         baseView.addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
+        baseView.searchField.addTarget(self, action: #selector(searchFieldDidChange), for: .editingChanged)
     }
 }
 
@@ -54,6 +55,11 @@ final class TodoListViewController: UIViewController {
 @objc private extension TodoListViewController {
     func didTapAddButton() {
         presenter.didTapAddButton()
+    }
+    
+    private func searchFieldDidChange(_ sender: UISearchTextField) {
+        let text = sender.text ?? ""
+        presenter.didSearchTextChange(text)
     }
 }
 

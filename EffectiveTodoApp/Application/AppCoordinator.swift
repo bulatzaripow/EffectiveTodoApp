@@ -23,7 +23,7 @@ final class AppCoordinator: Coordinator {
     }
     
     func start() {
-        let vc = ViewController()
+        let vc = TodoListBuilder.build()
         navigationController.setViewControllers( [vc], animated: false)
         
         UINavigationBar.appearance().tintColor = .appColor(.yellow)

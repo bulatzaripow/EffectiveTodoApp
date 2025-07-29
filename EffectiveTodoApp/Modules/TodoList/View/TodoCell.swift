@@ -11,6 +11,8 @@ final class TodoCell: UITableViewCell {
     
     // MARK: - Properties
     
+    private var currentTitle: String = ""
+    
     var onCheckboxTapped: (() -> Void)?
     
     // MARK: - UI
@@ -71,11 +73,31 @@ final class TodoCell: UITableViewCell {
     // MARK: - Configure
     
     func configure(with todo: Todo) {
+        currentTitle = todo.title
+        
         updateTitleLabel(with: todo.title)
         updateTextLabel(with: todo.text)
         updateDateLabel(with: todo.createdAt)
         updateCompleted(todo.completed)
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        titleLabel.attributedText = nil
+        titleLabel.text = nil
+        titleLabel.textColor = .appColor(.white)
+        
+        textLabelView.attributedText = nil
+        textLabelView.text = nil
+        textLabelView.textColor = .appColor(.white)
+        
+        dateLabel.text = nil
+
+        checkboxButton.setImage(nil, for: .normal)
+        checkboxButton.layer.borderColor = UIColor.appColor(.stroke).cgColor
+    }
+
 }
 
 // MARK: - UI setup
@@ -167,7 +189,7 @@ private extension TodoCell {
             textLabelView.textColor = .appColor(.white).withAlphaComponent(0.5)
             
             let attributedText = NSAttributedString(
-                string: titleLabel.text ?? "",
+                string: currentTitle,
                 attributes: [
                     .strikethroughStyle: NSUnderlineStyle.single.rawValue,
                     .strikethroughColor: UIColor.appColor(.white).withAlphaComponent(0.5)
@@ -175,9 +197,8 @@ private extension TodoCell {
             )
             titleLabel.attributedText = attributedText
         } else {
-            let title = titleLabel.text ?? ""
             titleLabel.attributedText = nil
-            titleLabel.text = title
+            titleLabel.text = currentTitle
             titleLabel.textColor = .appColor(.white)
             
             textLabelView.textColor = .appColor(.white)

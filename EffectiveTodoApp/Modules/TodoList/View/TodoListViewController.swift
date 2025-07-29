@@ -79,6 +79,7 @@ extension TodoListViewController: UITableViewDataSource {
         
         cell.configure(with: presenter.todos[indexPath.row])
         cell.selectionStyle = .none
+        cell.backgroundColor = .appColor(.black)
         
         cell.onCheckboxTapped = { [weak self] in
             guard let self = self else { return }
@@ -109,6 +110,51 @@ extension TodoListViewController: UITableViewDelegate {
         }
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    // MARK: Context menu
+    
+    func tableView(_ tableView: UITableView,
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        let todo = presenter.todos[indexPath.row]
+        
+        return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath, previewProvider: nil) { _ in
+            let editAction = UIAction(title: "Редактировать", image: UIImage(named: "edit")) { [weak self] _ in
+                self?.presenter.didSelectTodo(todo)
+            }
+            
+            let shareAction = UIAction(title: "Поделиться", image: UIImage(named: "export")) { _ in
+                // TODO: share logic
+            }
+            
+            let deleteIcon = UIImage(named: "trash")
+            deleteIcon?.withTintColor(.appColor(.red))
+            let deleteAction = UIAction(title: "Удалить", image: deleteIcon, attributes: .destructive) { [weak self] _ in
+                self?.presenter.didDeleteTodo(todo)
+            }
+            
+            return UIMenu(title: "", children: [editAction, shareAction, deleteAction])
+        }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   willDisplayContextMenu configuration: UIContextMenuConfiguration,
+                   animator: UIContextMenuInteractionAnimating?) {
+        guard let indexPath = configuration.identifier as? IndexPath,
+              let cell = tableView.cellForRow(at: indexPath) else { return }
+        cell.backgroundColor = .appColor(.gray)
+    }
+
+    func tableView(_ tableView: UITableView,
+                   willEndContextMenuInteraction configuration: UIContextMenuConfiguration,
+                   animator: UIContextMenuInteractionAnimating?) {
+        guard let indexPath = configuration.identifier as? IndexPath,
+              let cell = tableView.cellForRow(at: indexPath) else { return }
+        animator?.addAnimations {
+            cell.backgroundColor = .appColor(.black)
+        }
     }
 }
 

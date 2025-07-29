@@ -57,6 +57,18 @@ extension TodoListPresenter: TodoListPresenterProtocol {
             view?.updateTodoCount(todos.count)
         }
     }
+    
+    func didTapCheckboxButton(for id: Int) {
+        if let index = todos.firstIndex(where: { $0.id == id }) {
+            var updatedTodo = todos[index]
+            updatedTodo.completed.toggle()
+            todos[index] = updatedTodo
+            
+            interactor.toggleTodoCompletion(updatedTodo)
+            
+            view?.displayTodos(todos)
+        }
+    }
 }
 
 // MARK: - TodoListInteractorOutputProtocol

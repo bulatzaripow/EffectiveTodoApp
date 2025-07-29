@@ -9,6 +9,10 @@ import UIKit
 
 final class TodoCell: UITableViewCell {
     
+    // MARK: - Properties
+    
+    var onCheckboxTapped: (() -> Void)?
+    
     // MARK: - UI
     
     private let checkboxButton: UIButton = {
@@ -57,6 +61,7 @@ final class TodoCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        setupActions()
     }
 
     required init?(coder: NSCoder) {
@@ -87,6 +92,10 @@ private extension TodoCell {
         contentView.addSubview(dateLabel)
 
         setupConstraints()
+    }
+    
+    func setupActions() {
+        checkboxButton.addTarget(self, action: #selector(didTapCheckbox), for: .touchUpInside)
     }
 
     func setupConstraints() {
@@ -147,24 +156,42 @@ private extension TodoCell {
     }
     
     func updateCompleted(_ completed: Bool) {
-        guard completed else { return }
-        
-        checkboxButton.layer.borderColor = UIColor.appColor(.yellow).cgColor
-        checkboxButton.setImage(
-            UIImage(named: "check")?.withTintColor(.appColor(.yellow)),
-            for: .normal
-        )
-        
-        titleLabel.textColor = .appColor(.white).withAlphaComponent(0.5)
-        textLabelView.textColor = .appColor(.white).withAlphaComponent(0.5)
-        
-        let attributedText = NSAttributedString(
-            string: titleLabel.text ?? "",
-            attributes: [
-                .strikethroughStyle: NSUnderlineStyle.single.rawValue,
-                .strikethroughColor: UIColor.appColor(.white).withAlphaComponent(0.5)
-            ]
-        )
-        titleLabel.attributedText = attributedText
+        if completed {
+            checkboxButton.layer.borderColor = UIColor.appColor(.yellow).cgColor
+            checkboxButton.setImage(
+                UIImage(named: "check")?.withTintColor(.appColor(.yellow)),
+                for: .normal
+            )
+            
+            titleLabel.textColor = .appColor(.white).withAlphaComponent(0.5)
+            textLabelView.textColor = .appColor(.white).withAlphaComponent(0.5)
+            
+            let attributedText = NSAttributedString(
+                string: titleLabel.text ?? "",
+                attributes: [
+                    .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+                    .strikethroughColor: UIColor.appColor(.white).withAlphaComponent(0.5)
+                ]
+            )
+            titleLabel.attributedText = attributedText
+        } else {
+            let title = titleLabel.text ?? ""
+            titleLabel.attributedText = nil
+            titleLabel.text = title
+            titleLabel.textColor = .appColor(.white)
+            
+            textLabelView.textColor = .appColor(.white)
+            
+            checkboxButton.setImage(nil, for: .normal)
+            checkboxButton.layer.borderColor = UIColor.appColor(.stroke).cgColor
+        }
+    }
+}
+
+// MARK: - Actions
+
+@objc private extension TodoCell {
+    func didTapCheckbox() {
+        self.onCheckboxTapped?()
     }
 }

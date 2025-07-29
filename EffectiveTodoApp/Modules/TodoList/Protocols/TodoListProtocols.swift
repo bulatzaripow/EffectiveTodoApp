@@ -26,6 +26,7 @@ protocol TodoListPresenterProtocol: AnyObject {
     func didTapAddButton()
     func didSelectTodo(_ todo: Todo)
     func didDeleteTodo(_ todo: Todo)
+    func didTapCheckboxButton(for id: Int)
 }
 
 // MARK: - Interactor
@@ -35,6 +36,7 @@ protocol TodoListInteractorProtocol: AnyObject {
     func searchTodos(with query: String)
     func createTodo()
     func deleteTodo(_ todo: Todo)
+    func toggleTodoCompletion(_ todo: Todo)
 }
 
 protocol TodoListInteractorOutputProtocol: AnyObject {

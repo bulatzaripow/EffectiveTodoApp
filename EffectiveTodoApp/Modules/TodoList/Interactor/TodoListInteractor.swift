@@ -42,4 +42,8 @@ extension TodoListInteractor: TodoListInteractorProtocol {
     func deleteTodo(_ todo: Todo) {
         storageService.delete(todo: todo, completion: nil)
     }
+    
+    func toggleTodoCompletion(_ todo: Todo) {
+        storageService.update(todo: todo, completion: nil)
+    }
 }

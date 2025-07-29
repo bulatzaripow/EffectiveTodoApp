@@ -68,8 +68,17 @@ extension TodoListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath) as? TodoCell else {
             return UITableViewCell()
         }
+        
+        let todo = presenter.todos[indexPath.row]
+        
         cell.configure(with: presenter.todos[indexPath.row])
         cell.selectionStyle = .none
+        
+        cell.onCheckboxTapped = { [weak self] in
+            guard let self = self else { return }
+            self.presenter.didTapCheckboxButton(for: todo.id)
+        }
+        
         return cell
     }
 }

@@ -9,8 +9,11 @@ import UIKit
 
 final class TodoListBuilder {
     static func build() -> UIViewController {
+        let todosAPIUrl = URL(string: "https://dummyjson.com/todos")!
+        let todoNetworkService = TodoNetworkService(url: todosAPIUrl)
+        
         let view = TodoListViewController()
-        let presenter = TodoListPresenter()
+        let presenter = TodoListPresenter(networkService: todoNetworkService)
         let interactor = TodoListInteractor()
         let router = TodoListRouter()
         let storageService = TodosStorageService()

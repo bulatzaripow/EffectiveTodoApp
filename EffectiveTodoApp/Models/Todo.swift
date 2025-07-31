@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Todo: Equatable, Decodable {
+struct Todo: Equatable, Codable {
     var id: Int
     var title: String
     var text: String
@@ -45,6 +45,13 @@ struct Todo: Equatable, Decodable {
         
         self.text = ""
         self.createdAt = Date()
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(title, forKey: .todo)
+        try container.encode(completed, forKey: .completed)
     }
 }
 

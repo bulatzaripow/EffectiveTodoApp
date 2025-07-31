@@ -8,10 +8,16 @@
 import Foundation
 
 final class TodoNetworkService: TodoNetworkServiceProtocol {
-    private let url = URL(string: "https://dummyjson.com/todos")!
+    private let url: URL
+    private let session: NetworkSessionProtocol
+    
+    init(url: URL, session: NetworkSessionProtocol = URLSession.shared) {
+        self.url = url
+        self.session = session
+    }
         
     func fetchTodos(completion: @escaping (Result<[Todo], Error>) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        session.dataTask(with: url) { data, response, error in
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
@@ -20,7 +26,9 @@ final class TodoNetworkService: TodoNetworkServiceProtocol {
             }
             
             guard let data = data else {
-                // TODO: NetworkError
+                DispatchQueue.main.async {
+                    completion(.failure(NetworkError.noData))
+                }
                 return
             }
             
@@ -31,7 +39,7 @@ final class TodoNetworkService: TodoNetworkServiceProtocol {
                 }
             } catch {
                 DispatchQueue.main.async {
-                    completion(.failure(error))
+                    completion(.failure(NetworkError.decodingError(error)))
                 }
             }
         }.resume()

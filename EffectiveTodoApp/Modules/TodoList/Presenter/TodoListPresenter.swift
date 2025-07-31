@@ -15,7 +15,7 @@ final class TodoListPresenter {
     var interactor: TodoListInteractorProtocol!
     var router: TodoListRouterProtocol!
     
-    private let todoNetworkService: TodoNetworkServiceProtocol
+    private let networkService: TodoNetworkServiceProtocol
     
     // MARK: - State
     
@@ -23,8 +23,8 @@ final class TodoListPresenter {
     
     // MARK: - Init
     
-    init(todoNetworkService: TodoNetworkServiceProtocol = TodoNetworkService()) {
-        self.todoNetworkService = todoNetworkService
+    init(networkService: TodoNetworkServiceProtocol) {
+        self.networkService = networkService
     }
 }
 
@@ -82,7 +82,7 @@ extension TodoListPresenter: TodoListPresenterProtocol {
     
     func loadMockData() {
         if !UserDefaults.standard.bool(forKey: "isFirstLaunch") {
-            todoNetworkService.fetchTodos { [weak self] result in
+            networkService.fetchTodos { [weak self] result in
                 switch result {
                 case .success(let todos):
                     self?.todos = todos

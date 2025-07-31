@@ -23,7 +23,10 @@ final class TodoListPresenterTests: XCTestCase {
         mockInteractor = MockTodoListInteractor()
         mockRouter = MockTodoListRouter()
         
-        presenter = TodoListPresenter()
+        let todosAPIUrl = URL(string: "https://dummyjson.com/todos")!
+        let todoNetworkService = TodoNetworkService(url: todosAPIUrl)
+        
+        presenter = TodoListPresenter(networkService: todoNetworkService)
         presenter.view = mockView
         presenter.interactor = mockInteractor
         presenter.router = mockRouter
